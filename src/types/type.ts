@@ -19,8 +19,8 @@ export type Project = {
     name: string;
     description: string;
     dateModified: Date;
-    tasks: Task[];
-    team: TeamMember[];
+    tasks?: Task[];
+    team: TeamMember[]; //you must add user to team and then can add team member to project
 };
 
 export type UserData = {
@@ -29,7 +29,7 @@ export type UserData = {
     email: string;
     pass: string;
     role: "admin";
-    projects: Project[];
+    projects?: Project[];
 };
 
 export type UserState = {

@@ -1,0 +1,42 @@
+main{
+    min-width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-flow: column nowrap;
+
+    position: relative;
+}
+
+.layout{
+    width: 100%;
+    height: 50px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #65a1fa;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
+    nav ul{
+        list-style: none;
+
+        a{
+            text-decoration: none;
+        }
+        
+
+        li{
+            margin-bottom: 10px;
+            color: #000;
+            font-size: 16px;
+        }
+    }
+}
+
+h1{
+    font-size: 24px;
+    font-weight: bold;
+}
