@@ -24,7 +24,6 @@ export type Project = {
 };
 
 export type UserData = {
-    id: number;
     name: string;
     email: string;
     pass: string;

@@ -1,8 +1,19 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { UserData, UserState } from "../../types/type";
+
+const user1:UserData = { name: "John Doe",email: "abc@gmail.com",pass: "123456", role: "admin" }
+const user2:UserData = { name: "Ali",email: "ali@gmail.com",pass: "123456", role: "admin" }
+
+const users:UserState = { users: [user1, user2] }
+
+localStorage.setItem("users", JSON.stringify([users]));
+localStorage.setItem("auth", "true");
 
 const isAuthenticated = () => {
-  // check if user is authenticated
-  return false; // false for testing purposes. if you want to see other pages, change it to true
+  if (localStorage.getItem("auth") === "true") {
+    return true;
+  }
+  return false;
 };
 
 const ProtectedRoute = () => {
