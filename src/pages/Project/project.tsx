@@ -1,8 +1,7 @@
-
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import styles from "./Projects.module.scss";
 import { useNavigate } from "react-router-dom";
+import styles from "./Projects.module.scss";
 
 type Project = {
   id: number;
@@ -55,8 +54,8 @@ const Projects = () => {
               <small>تاریخ ایجاد: {project.createdAt}</small>
             </div>
             <div className={styles.actions}>
-              <button onClick={() => navigate(`/project/${project.id}`, { state: { project: project.id } })}>
-                ورود
+              <button onClick={() => navigate(`/project/${project.id}`, { state: { project } })}>
+                ورود به پروژه
               </button>
               <button onClick={() => deleteProject(project.id)}>حذف</button>
             </div>
