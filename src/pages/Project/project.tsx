@@ -1,19 +1,70 @@
-import { useLocation, useNavigate } from "react-router";
-import styles from "./project.module.scss"
 
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import styles from "./Projects.module.scss";
+import { useNavigate } from "react-router-dom";
 
-const Project = () => {
-    const task = "task"; // get task from redux
-    const navigate = useNavigate();
-    const location = useLocation();
-    const project = location.state?.project;
-    return (
-        <div className={styles.project}>
-            <h1>Project page</h1>
-            <button onClick={() => navigate(`/${project}/${task}`)}>task</button>
-            <button onClick={() => navigate(`/${project}/team`)}>team</button>
-        </div>
-    );
+type Project = {
+  id: number;
+  title: string;
+  description: string;
+  createdAt: string;
 };
 
-export default Project;
+type FormData = {
+  title: string;
+  description: string;
+};
+
+const Projects = () => {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const { register, handleSubmit, reset } = useForm<FormData>();
+  const navigate = useNavigate();
+
+  const onSubmit = (data: FormData) => {
+    const newProject: Project = {
+      id: Date.now(),
+      title: data.title,
+      description: data.description,
+      createdAt: new Date().toLocaleDateString(),
+    };
+    setProjects([...projects, newProject]);
+    reset();
+  };
+
+  const deleteProject = (id: number) => {
+    setProjects(projects.filter(p => p.id !== id));
+  };
+
+  return (
+    <div className={styles.projects}>
+      <h1>پروژه‌ها</h1>
+
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <input {...register("title", { required: true })} placeholder="عنوان پروژه" />
+        <textarea {...register("description")} placeholder="توضیحات پروژه" />
+        <button type="submit">افزودن پروژه</button>
+      </form>
+
+      <ul className={styles.list}>
+        {projects.map(project => (
+          <li key={project.id} className={styles.item}>
+            <div>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <small>تاریخ ایجاد: {project.createdAt}</small>
+            </div>
+            <div className={styles.actions}>
+              <button onClick={() => navigate(`/project/${project.id}`, { state: { project: project.id } })}>
+                ورود
+              </button>
+              <button onClick={() => deleteProject(project.id)}>حذف</button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default Projects;
