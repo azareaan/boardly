@@ -1,82 +1,43 @@
 .projects {
   padding: 20px;
-  background-color: #f4f4f4;
+  background-color: #f4f7fc;
   border-radius: 8px;
 }
 
 h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 30px;
-}
-
-input,
-textarea {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-  width: 100%;
-}
-
-button {
-  padding: 10px;
-  border: none;
-  background-color: #4CAF50;
-  color: white;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #45a049;
-  }
+  color: #333;
+  text-align: center;
 }
 
 .list {
-  list-style: none;
+  list-style-type: none;
   padding: 0;
 }
 
 .item {
   background-color: white;
+  margin-bottom: 10px;
   padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 8px;
+  border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
 }
 
 .actions {
-  margin-top: 10px;
   display: flex;
   gap: 10px;
 }
 
-.actions button {
-  padding: 8px 15px;
+button {
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
 }
 
-.actions button:first-child {
-  background-color: #2196F3;
-  color: white;
-}
-
-.actions button:last-child {
-  background-color: #f44336;
-  color: white;
-}
-
-.actions button:hover {
-  opacity: 0.8;
+button:hover {
+  background-color: #0056b3;
 }
