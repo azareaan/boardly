@@ -1,19 +1,83 @@
-import { useLocation, useNavigate } from "react-router";
-import styles from "./project.module.scss"
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./Project.module.scss";
+import { useForm } from "react-hook-form";
+import ProjectForm, { ProjectInput } from "../../components/Project/ProjectForm";
 
-
-const Project = () => {
-    const task = "task"; // get task from redux
-    const navigate = useNavigate();
-    const location = useLocation();
-    const project = location.state?.project;
-    return (
-        <div className={styles.project}>
-            <h1>Project page</h1>
-            <button onClick={() => navigate(`/${project}/${task}`)}>task</button>
-            <button onClick={() => navigate(`/${project}/team`)}>team</button>
-        </div>
-    );
+type Project = {
+  id: number;
+  title: string;
+  description: string;
+  createdAt: string;
 };
 
-export default Project;
+const Projects = () => {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [editProject, setEditProject] = useState<Project | null>(null);
+  const { register, handleSubmit, reset } = useForm<ProjectInput>();
+  const navigate = useNavigate();
+
+  const onSubmit = (data: ProjectInput) => {
+    if (editProject) {
+      // Update existing project
+      const updatedProjects = projects.map((project) =>
+        project.id === editProject.id
+          ? { ...project, ...data }
+          : project
+      );
+      setProjects(updatedProjects);
+      setEditProject(null); 
+    } else {
+      // Add new project
+      const newProject: Project = {
+        id: Date.now(),
+        ...data,
+        createdAt: new Date().toLocaleDateString(),
+      };
+      setProjects([...projects, newProject]);
+    }
+    reset(); 
+  };
+
+  const deleteProject = (id: number) => {
+    setProjects(projects.filter((p) => p.id !== id));
+  };
+
+  const editProjectHandler = (project: Project) => {
+    setEditProject(project);
+    reset({ ...project });
+  };
+
+  return (
+    <div className={styles.projects}>
+      <h1>پروژه‌ها</h1>
+
+      <ProjectForm onSubmit={onSubmit} defaultValues={editProject || undefined} />
+
+      <ul className={styles.list}>
+        {projects.map((project) => (
+          <li key={project.id} className={styles.item}>
+            <div>
+              <h3>{project.title}</h3>
+              <p>{project.description}</p>
+              <small>تاریخ ایجاد: {project.createdAt}</small>
+            </div>
+            <div className={styles.actions}>
+              <button onClick={() => editProjectHandler(project)}>ویرایش</button>
+              <button onClick={() => deleteProject(project.id)}>حذف</button>
+              <button
+                onClick={() =>
+                  navigate(`/project/${project.id}`, { state: { project: project.id } })
+                }
+              >
+                ورود
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default Projects;
