@@ -1,76 +1,44 @@
-import { useState } from "react";
-import styles from "./team.module.scss";
+import React, { useState } from "react";
+import TeamMemberForm, { TeamMemberInput } from "./TeamMemberForm";
+import styles from "./Team.module.scss";
 
-type Member = {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-};
+const TeamManagement = () => {
+  const [teamMembers, setTeamMembers] = useState<TeamMemberInput[]>([]);
 
-const Team = () => {
-  const [members, setMembers] = useState<Member[]>([]);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
-
-  const addMember = () => {
-    const newMember = {
-      id: Date.now(),
-      name,
-      email,
-      role,
-    };
-    setMembers([...members, newMember]);
-    setName("");
-    setEmail("");
-    setRole("");
+  const handleAddMember = (data: TeamMemberInput) => {
+    setTeamMembers([...teamMembers, data]);
   };
 
-  const deleteMember = (id: number) => {
-    setMembers(members.filter((member) => member.id !== id));
+  const handleDeleteMember = (name: string) => {
+    setTeamMembers(teamMembers.filter(member => member.name !== name));
   };
 
   return (
-    <div className={styles.team}>
-      <h1>مدیریت اعضا تیم</h1>
+    <div className={styles.teamManagement}>
+      <h1>مدیریت اعضای تیم</h1>
+      <TeamMemberForm onSubmit={handleAddMember} />
 
-      <div className={styles.form}>
-        <input
-          type="text"
-          placeholder="نام"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="email"
-          placeholder="ایمیل"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="نقش"
-          value={role}
-          onChange={(e) => setRole(e.target.value)}
-        />
-        <button onClick={addMember}>افزودن عضو</button>
+      <div className={styles.teamList}>
+        <h2>اعضای تیم</h2>
+        <ul>
+          {teamMembers.map((member, index) => (
+            <li key={index} className={styles.teamMember}>
+              <div>
+                <p>نام: {member.name}</p>
+                <p>نقش: {member.role}</p>
+              </div>
+              <button
+                onClick={() => handleDeleteMember(member.name)}
+                className={styles.deleteButton}
+              >
+                حذف
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
-
-      <ul className={styles.memberList}>
-        {members.map((member) => (
-          <li key={member.id} className={styles.memberItem}>
-            <div>
-              <h3>{member.name}</h3>
-              <p>{member.email}</p>
-              <small>نقش: {member.role}</small>
-            </div>
-            <button onClick={() => deleteMember(member.id)}>حذف</button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
 
-export default Team;
+export default TeamManagement;
