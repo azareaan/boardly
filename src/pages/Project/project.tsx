@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./Projects.module.scss";
+import styles from "./Project.module.scss";
 import { useForm } from "react-hook-form";
-import ProjectForm, { ProjectInput } from "../ProjectForm/ProjectForm";
+import ProjectForm, { ProjectInput } from "../../components/Project/ProjectForm";
 
 type Project = {
   id: number;

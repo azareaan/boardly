@@ -6,6 +6,7 @@ type Priority = "کم" | "متوسط" | "زیاد";
 type Status = "do-to" | "در حال انجام" | "انجام شده";
 
 export interface TaskInput {
+  id: number;
   title: string;
   description: string;
   priority: Priority;
