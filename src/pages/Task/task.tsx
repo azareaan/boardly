@@ -1,79 +1,62 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
+import TaskForm, { TaskInput } from "../components/TaskForm";
+import styles from "./Task.module.scss";
 
+const TaskManagement = () => {
+  const [tasks, setTasks] = useState<TaskInput[]>([]);
+  const navigate = useNavigate();
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import styles from "./tasks.module.scss";
-
-type Task = {
-  id: number;
-  title: string;
-  description: string;
-  status: "todo" | "in-progress" | "done";
-  deadline?: string;
-};
-
-type TaskFormData = {
-  title: string;
-  description: string;
-  deadline?: string;
-  status: Task["status"];
-};
-
-const TasksPage = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const { register, handleSubmit, reset } = useForm<TaskFormData>();
-
-  const onSubmit = (data: TaskFormData) => {
-    const newTask: Task = {
-      id: Date.now(),
-      ...data,
-    };
-    setTasks([...tasks, newTask]);
-    reset();
+  const addTaskHandler = (task: TaskInput) => {
+    setTasks([...tasks, task]);
   };
 
-  const deleteTask = (id: number) => {
-    setTasks(tasks.filter(task => task.id !== id));
+  const editTaskHandler = (taskId: number) => {
+    const taskToEdit = tasks.find((task) => task.id === taskId);
+    if (taskToEdit) {
+      navigate("/edit-task", { state: { task: taskToEdit } });
+    }
   };
 
-  const updateStatus = (id: number, newStatus: Task["status"]) => {
-    setTasks(tasks.map(task => task.id === id ? { ...task, status: newStatus } : task));
+  const deleteTaskHandler = (taskId: number) => {
+    setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
   return (
-    <div className={styles.tasks}>
+    <div className={styles.taskManagement}>
       <h1>مدیریت تسک‌ها</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        <input {...register("title", { required: true })} placeholder="عنوان تسک" />
-        <textarea {...register("description")} placeholder="توضیحات" />
-        <input type="date" {...register("deadline")} />
-        <select {...register("status")}>
-          <option value="todo">To Do</option>
-          <option value="in-progress">In Progress</option>
-          <option value="done">Done</option>
-        </select>
-        <button type="submit">افزودن تسک</button>
-      </form>
+      <TaskForm onSubmit={addTaskHandler} />
 
-      <div className={styles.list}>
-        {tasks.map(task => (
-          <div key={task.id} className={styles.card}>
-            <h3>{task.title}</h3>
-            <p>{task.description}</p>
-            <p><strong>وضعیت:</strong> {task.status}</p>
-            {task.deadline && <p><strong>ددلاین:</strong> {task.deadline}</p>}
-            <select value={task.status} onChange={(e) => updateStatus(task.id, e.target.value as Task["status"])}>
-              <option value="todo">To Do</option>
-              <option value="in-progress">In Progress</option>
-              <option value="done">Done</option>
-            </select>
-            <button onClick={() => deleteTask(task.id)}>حذف</button>
-          </div>
-        ))}
+      <div className={styles.taskList}>
+        {tasks.length === 0 ? (
+          <p>هیچ تسکی برای نمایش وجود ندارد.</p>
+        ) : (
+          <ul>
+            {tasks.map((task, index) => (
+              <li key={index} className={styles.taskItem}>
+                <div>
+                  <h3>{task.title}</h3>
+                  <p>{task.description}</p>
+                  <small>تاریخ سررسید: {task.dueDate}</small>
+                  <div>Status: {task.status}</div>
+                  <div>اولویت: {task.priority}</div>
+                </div>
+                <div className={styles.actions}>
+                  <button onClick={() => editTaskHandler(task.id)}>
+                    ویرایش
+                  </button>
+                  <button onClick={() => deleteTaskHandler(task.id)}>
+                    حذف
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
 };
 
-export default TasksPage;
+export default TaskManagement;
