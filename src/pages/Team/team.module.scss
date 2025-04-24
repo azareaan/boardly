@@ -1,66 +1,50 @@
-.team {
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #f4f4f4;
   padding: 20px;
-  background-color: #f5f5f5;
+  border-radius: 8px;
+}
 
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
+.title {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
 
-  .form {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
 
-    input {
-      padding: 10px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
 
-    button {
-      padding: 10px 20px;
-      background-color: #4caf50;
-      color: white;
-      border: none;
-      cursor: pointer;
+input,
+select {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
 
-      &:hover {
-        background-color: #45a049;
-      }
-    }
-  }
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-  .memberList {
-    list-style: none;
-    padding: 0;
+button:hover {
+  background-color: #0056b3;
+}
 
-    .memberItem {
-      display: flex;
-      justify-content: space-between;
-      background-color: white;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 4px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-      h3 {
-        margin: 0;
-      }
-
-      button {
-        background-color: #f44336;
-        color: white;
-        border: none;
-        cursor: pointer;
-        padding: 5px 10px;
-        border-radius: 4px;
-
-        &:hover {
-          background-color: #e53935;
-        }
-      }
-    }
-  }
+.error {
+  color: red;
+  font-size: 0.9rem;
 }
