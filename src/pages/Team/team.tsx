@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import TeamMemberForm, { TeamMemberInput } from "./TeamMemberForm";
+import TeamMemberForm, { TeamMemberInput } from "../../components/TeamMember/TeamMemberForm";
 import styles from "./Team.module.scss";
 
 const TeamManagement = () => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
-import TaskForm, { TaskInput } from "../components/TaskForm";
+import TaskForm, { TaskInput } from "../../components/Task/TaskForm";
 import styles from "./Task.module.scss";
 
 const TaskManagement = () => {
