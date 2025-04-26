@@ -1,62 +1,77 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
-import TaskForm, { TaskInput } from "../../components/Task/TaskForm";
-import styles from "./Task.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { addTask, editTask, removeTask } from "@/store/taskSlice";
+import TaskForm from "@/components/task/TaskForm";
+import { TaskInput } from "@/types/types";
+import styles from "./tasks.module.scss";
 
-const TaskManagement = () => {
-  const [tasks, setTasks] = useState<TaskInput[]>([]);
-  const navigate = useNavigate();
+const Tasks: React.FC = () => {
+  const dispatch = useDispatch();
+  const tasks = useSelector((state: RootState) => state.tasks.tasks);
+  const teamMembers = useSelector((state: RootState) => state.team.members);
 
-  const addTaskHandler = (task: TaskInput) => {
-    setTasks([...tasks, task]);
-  };
+  const [editingTask, setEditingTask] = useState<TaskInput | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
-  const editTaskHandler = (taskId: number) => {
-    const taskToEdit = tasks.find((task) => task.id === taskId);
-    if (taskToEdit) {
-      navigate("/edit-task", { state: { task: taskToEdit } });
+  const handleAddOrEditTask = (data: TaskInput) => {
+    if (editingTask) {
+      dispatch(editTask(data));
+    } else {
+      dispatch(addTask(data));
     }
+    setEditingTask(null);
+    setIsFormOpen(false);
   };
 
-  const deleteTaskHandler = (taskId: number) => {
-    setTasks(tasks.filter((task) => task.id !== taskId));
+  const handleEditClick = (task: TaskInput) => {
+    setEditingTask(task);
+    setIsFormOpen(true);
+  };
+
+  const handleDeleteClick = (title: string) => {
+    dispatch(removeTask(title));
   };
 
   return (
-    <div className={styles.taskManagement}>
+    <div className={styles.tasksPage}>
       <h1>مدیریت تسک‌ها</h1>
 
-      <TaskForm onSubmit={addTaskHandler} />
+      <button className={styles.addBtn} onClick={() => { setIsFormOpen(true); setEditingTask(null); }}>
+        افزودن تسک جدید
+      </button>
+
+      {isFormOpen && (
+        <TaskForm
+          onSubmit={handleAddOrEditTask}
+          defaultValues={editingTask || undefined}
+          teamMembers={teamMembers}
+        />
+      )}
 
       <div className={styles.taskList}>
-        {tasks.length === 0 ? (
-          <p>هیچ تسکی برای نمایش وجود ندارد.</p>
+        {tasks.length > 0 ? (
+          tasks.map((task, index) => (
+            <div key={index} className={styles.taskCard}>
+              <p><strong>عنوان:</strong> {task.title}</p>
+              <p><strong>توضیحات:</strong> {task.description}</p>
+              <p><strong>اولویت:</strong> {task.priority}</p>
+              <p><strong>وضعیت:</strong> {task.status}</p>
+              <p><strong>تاریخ سررسید:</strong> {task.dueDate}</p>
+              <p><strong>مسئول:</strong> {task.assignee}</p>
+
+              <div className={styles.actions}>
+                <button onClick={() => handleEditClick(task)}>ویرایش</button>
+                <button onClick={() => handleDeleteClick(task.title)}>حذف</button>
+              </div>
+            </div>
+          ))
         ) : (
-          <ul>
-            {tasks.map((task, index) => (
-              <li key={index} className={styles.taskItem}>
-                <div>
-                  <h3>{task.title}</h3>
-                  <p>{task.description}</p>
-                  <small>تاریخ سررسید: {task.dueDate}</small>
-                  <div>Status: {task.status}</div>
-                  <div>اولویت: {task.priority}</div>
-                </div>
-                <div className={styles.actions}>
-                  <button onClick={() => editTaskHandler(task.id)}>
-                    ویرایش
-                  </button>
-                  <button onClick={() => deleteTaskHandler(task.id)}>
-                    حذف
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <p>تسکی موجود نیست.</p>
         )}
       </div>
     </div>
   );
 };
 
-export default TaskManagement;
+export default Tasks;
