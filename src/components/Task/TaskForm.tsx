@@ -1,32 +1,21 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { TaskInput } from "@/types/types";
 import styles from "./TaskForm.module.scss";
-
-type Priority = "کم" | "متوسط" | "زیاد";
-type Status = "do-to" | "در حال انجام" | "انجام شده";
-
-export interface TaskInput {
-  id: number;
-  title: string;
-  description: string;
-  priority: Priority;
-  status: Status;
-  dueDate: string;
-  assignee: string;
-}
 
 interface TaskFormProps {
   onSubmit: (data: TaskInput) => void;
   defaultValues?: TaskInput;
+  teamMembers: { name: string }[]; 
 }
 
-const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, defaultValues }) => {
+const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, defaultValues, teamMembers }) => {
   const { register, handleSubmit, formState: { errors } } = useForm<TaskInput>({
     defaultValues: defaultValues || {
       priority: "متوسط",
       status: "do-to",
       dueDate: new Date().toISOString().split("T")[0],
-      assignee: "",
+      assignee: "", 
     },
   });
 
@@ -86,10 +75,14 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, defaultValues }) => {
 
       <div className={styles.formGroup}>
         <label htmlFor="assignee">مسئول تسک</label>
-        <input
-          id="assignee"
-          {...register("assignee", { required: "مسئول تسک الزامی است" })}
-        />
+        <select id="assignee" {...register("assignee", { required: "مسئول تسک الزامی است" })}>
+          <option value="">انتخاب مسئول</option>
+          {teamMembers.map((member) => (
+            <option key={member.name} value={member.name}>
+              {member.name}
+            </option>
+          ))}
+        </select>
         {errors.assignee && <p className={styles.error}>{errors.assignee.message}</p>}
       </div>
 
