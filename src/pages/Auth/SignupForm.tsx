@@ -1,5 +1,8 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import styles from "./AuthForm.module.scss";
+import styles from "./SignupForm.module.scss";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../redux/slices/userSlice";
+import { UserData } from "../../types/type";
 
 type SignupInputs = {
   name: string;
@@ -8,6 +11,8 @@ type SignupInputs = {
 };
 
 function SignupForm() {
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -15,7 +20,14 @@ function SignupForm() {
   } = useForm<SignupInputs>();
 
   const onSubmit: SubmitHandler<SignupInputs> = (data) => {
-    console.log("Signup Data:", data);
+    const userData: UserData = {
+      name: data.name,
+      email: data.email,
+      pass: data.password,
+      role: "admin"
+    }
+    dispatch(userActions.addUser(userData));
+    console.log("Signup Data:", userData);
   };
 
   return (
