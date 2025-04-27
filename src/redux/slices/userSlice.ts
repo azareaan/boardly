@@ -3,7 +3,7 @@ import { UserState, Task, TeamMember, Project, UserData } from "../../types/type
 
 // Get the initial state from localStorage or set it to an empty array
 const store = localStorage.getItem("users");
-const initialState: UserState = store ? JSON.parse(store) : [];
+let initialState: UserState = store ? JSON.parse(store) : { users: [] };
 
 export const userSlice = createSlice({
     name: "user",
@@ -11,30 +11,31 @@ export const userSlice = createSlice({
     reducers: {
         Authentication: (state, action: PayloadAction<{ email: string; pass: string }>) => {
             const { email, pass } = action.payload;
-            const userIndex: number = state.users.findIndex(item => item.email === email) || -1;
+            const userIndex: number = state.users.findIndex(item => item.email === email);
             if (userIndex !== -1) {
                 if (state.users[userIndex].pass === pass) {
-                    localStorage.setItem("auth", "true")
-
+                    localStorage.setItem("auth", JSON.stringify({auth: "true", userIndex: userIndex}));
+                    window.location.href = "/";
                 } else {
-                    alert("Wrong password")
-                    localStorage.setItem("auth", "false")
+                    alert("Wrong password");
+                    localStorage.setItem("auth", JSON.stringify({auth: "false", userIndex: -1}));
                 }
                 
             } else {
-                localStorage.setItem("auth", "false")
+                localStorage.setItem("auth", JSON.stringify({auth: "false", userIndex: -1}));           
             }
         },
         // add user
         addUser: (state, action: PayloadAction<UserData>) => {
             state.users.push(action.payload);
             localStorage.setItem("users", JSON.stringify(state));
+            window.location.href = "/login";
         },
         
         // add project
         addProject: (state, action: PayloadAction<{ email: string; project: Project }>) => {
             const { email, project } = action.payload;
-            const userIndex: number = state.users.findIndex(item => item.email === email) || -1;
+            const userIndex: number = state.users.findIndex(item => item.email === email);
             
             if (userIndex !== -1) {
                 state.users[userIndex].projects?.push(project);
@@ -48,7 +49,7 @@ export const userSlice = createSlice({
             const userIndex = state.users.findIndex(item => item.email === email);
             
             if (userIndex !== -1) {
-                const projectIndex:number = state.users[userIndex].projects?.findIndex(p => p.id === projectId) || -1;
+                const projectIndex:number = state.users[userIndex].projects!.findIndex(p => p.id === projectId);
                 
                 if (projectIndex !== -1) {
                     state.users[userIndex].projects![projectIndex].tasks!.push(task);
@@ -68,10 +69,10 @@ export const userSlice = createSlice({
             const userIndex = state.users.findIndex(item => item.email === email);
             
             if (userIndex !== -1) {
-                const projectIndex: number = state.users[userIndex].projects?.findIndex(p => p.id === projectId) || -1;
+                const projectIndex: number = state.users[userIndex].projects!.findIndex(p => p.id === projectId);
                 
                 if (projectIndex !== -1) {
-                    const taskIndex: number = state.users[userIndex].projects![projectIndex].tasks?.findIndex(t => t.id === taskId) || -1;
+                    const taskIndex: number = state.users[userIndex].projects![projectIndex].tasks!.findIndex(t => t.id === taskId);
                     
                     if (taskIndex !== -1) {
                         state.users[userIndex].projects![projectIndex].tasks![taskIndex].status = status;
@@ -91,7 +92,7 @@ export const userSlice = createSlice({
             const userIndex = state.users.findIndex(item => item.email === email);
             
             if (userIndex !== -1) {
-                const projectIndex: number = state.users[userIndex].projects?.findIndex(p => p.id === projectId) || -1;
+                const projectIndex: number = state.users[userIndex].projects!.findIndex(p => p.id === projectId);
                 
                 if (projectIndex !== -1) {
                     state.users![userIndex].projects![projectIndex].team.push(member);
