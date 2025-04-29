@@ -4,13 +4,18 @@ import Home from '../pages/Home/home';
 import Project from '../pages/Project/project';
 import Task from '../pages/Task/task';
 import Team from '../pages/Team/team';
-import Login from '../pages/Login/login';
 import ProtectedRoute from '../components/ProtectedRoute/protectedroute';
+import LoginForm from '../pages/Auth/LoginForm';
+import SignupForm from '../pages/Auth/SignupForm';
 
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <Login />
+    element: <LoginForm />
+  },
+  {
+    path: "/signup",
+    element: <SignupForm />
   },
   {
     path: "/",
