@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store";
-import { addTask, editTask, removeTask } from "@/store/taskSlice";
-import TaskForm from "@/components/task/TaskForm";
-import { TaskInput } from "@/types/types";
-import styles from "./tasks.module.scss";
+import { RootState } from "../../redux/redux";
+import { addTask, editTask, removeTask } from "../../redux/slices/taskSlice";
+import TaskForm from "../../components/Task/TaskForm";
+import { TaskInput } from "../../types/type";
+import styles from "./task.module.scss";
 
 const Tasks: React.FC = () => {
   const dispatch = useDispatch();

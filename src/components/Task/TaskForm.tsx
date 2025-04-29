@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { TaskInput } from "@/types/types";
+import { TaskInput } from "../../types/type";
 import styles from "./TaskForm.module.scss";
 
 interface TaskFormProps {

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store";
-import { addMember, editMember, removeMember } from "@/store/teamSlice";
-import TeamMemberForm from "@/components/team/TeamMemberForm";
-import { TeamMemberInput } from "@/types/types";
+import { RootState } from "../../redux/redux";
+import { addMember, editMember, removeMember } from "../../redux/slices/teamSlice";
+import TeamMemberForm from "../../components/TeamMember/TeamMemberForm";
+import { TeamMemberInput } from "../../types/type";
 import styles from "./team.module.scss";
 
 const Team: React.FC = () => {
