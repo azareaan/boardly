@@ -30,7 +30,7 @@ const Layout = () => {
                 </nav>
                 <div className={styles.userName}>
                     <p>welcome {user?.name}</p>
-                    <button onClick={handleExit}>exit</button>
+                    <button onClick={handleExit} className={styles.exitButton}></button>
                 </div>
             </div>
             <Outlet />
