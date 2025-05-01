@@ -9,7 +9,7 @@ const Home = () => {
     return (
         <div className={styles.home}>
             <h1>Home</h1>
-            <button onClick={() => navigate(`/${project}`, { state: { project } })}>project</button>
+            <button className={styles.homeButton} onClick={() => navigate(`/${project}`, { state: { project } })}>see your project 💻</button>
         </div>
     );
 };

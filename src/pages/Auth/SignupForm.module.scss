@@ -1,14 +1,29 @@
+.container{
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f4f8;
+}
+
 .form {
   max-width: 400px;
-  margin: 50px auto;
-  background-color: #ffffff;
-  padding: 2rem;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin: auto;
+  background-color: #f5faff;
+  padding: 25px;
   border-radius: 1rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0px 20px #0019312f;
   font-family: "Segoe UI", sans-serif;
 }
 
 .title {
+  width: 300px;
   font-size: 1.8rem;
   font-weight: bold;
   text-align: center;
@@ -50,17 +65,16 @@
 .submitButton {
   width: 100%;
   padding: 0.8rem;
-  background: linear-gradient(135deg, #007bff, #00bcd4);
+  background-color: #007bff;
   border: none;
   border-radius: 0.6rem;
   color: #fff;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease;
-  margin-top: 1rem;
+  transition: all 0.3s ease;
 }
 
 .submitButton:hover {
-  background: linear-gradient(135deg, #0056b3, #0097a7);
+  background-color: #0056b3;
 }
