@@ -32,34 +32,37 @@ function SignupForm() {
   };
 
   return (
-    <>
+    <div className={styles.container}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        <h2>ثبت‌ نام</h2>
+        <h2 className={styles.title}>Sign up</h2>
 
         <input
-          {...register("name", { required: "نام الزامی است" })}
-          placeholder="نام"
+          className={styles.input}
+          {...register("name", { required: "neme is required" })}
+          placeholder="name"
         />
-        {errors.name && <span>{errors.name.message}</span>}
+        {errors.name && <span className={styles.error}>{errors.name.message}</span>}
 
         <input
-          {...register("email", { required: "ایمیل الزامی است" })}
-          placeholder="ایمیل"
+          className={styles.input}
+          {...register("email", { required: "email is required" })}
+          placeholder="email"
           type="email"
         />
-        {errors.email && <span>{errors.email.message}</span>}
+        {errors.email && <span className={styles.error}>{errors.email.message}</span>}
 
         <input
-          {...register("password", { required: "رمز عبور الزامی است" })}
-          placeholder="رمز عبور"
+          className={styles.input}
+          {...register("password", { required: "password is required" })}
+          placeholder="password"
           type="password"
         />
-        {errors.password && <span>{errors.password.message}</span>}
+        {errors.password && <span className={styles.error}>{errors.password.message}</span>}
 
-        <button type="submit">ثبت‌ نام</button>
+        <button className={styles.submitButton} type="submit">ُSign up</button>
+        <Link className={styles.link} to="/login">You have already an account? Login now.</Link>
       </form>
-      <Link to="/login">You have already an account? Login now.</Link>
-    </>
+    </div>
   );
 }
 

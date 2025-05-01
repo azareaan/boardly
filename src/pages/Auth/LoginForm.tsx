@@ -24,28 +24,30 @@ function LoginForm() {
   };
 
   return (
-    <>
+    <div className={styles.container}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-        <h2>ورود</h2>
+        <h2 className={styles.title}>Login</h2>
 
         <input
-          {...register("email", { required: "ایمیل الزامی است" })}
-          placeholder="ایمیل"
+          className={styles.input}
+          {...register("email", { required: "email is required" })}
+          placeholder="email"
           type="email"
         />
-        {errors.email && <span>{errors.email.message}</span>}
+        {errors.email && <span className={styles.error}>{errors.email.message}</span>}
 
         <input
-          {...register("pass", { required: "رمز عبور الزامی است" })}
-          placeholder="رمز عبور"
+          className={styles.input}
+          {...register("pass", { required: "password is required" })}
+          placeholder="password"
           type="password"
         />
-        {errors.pass && <span>{errors.pass.message}</span>}
+        {errors.pass && <span className={styles.error}>{errors.pass.message}</span>}
 
-        <button type="submit">ورود</button>
+        <button className={styles.submitButton} type="submit">Login</button>
+        <Link className={styles.link} to="/signup">You don't have an account? Sign-up now.</Link>
       </form>
-      <Link to="/signup">You don't have an account? Sign-up now.</Link>
-    </>
+    </div>
   );
 }
 

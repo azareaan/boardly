@@ -1,14 +1,29 @@
+.container{
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f4f8;
+}
+
 .form {
   max-width: 400px;
-  margin: 50px auto;
-  background-color: #ffffff;
-  padding: 2rem;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin: auto;
+  background-color: #f5faff;
+  padding: 25px;
   border-radius: 1rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0px 20px #0019312f;
   font-family: "Segoe UI", sans-serif;
 }
 
 .title {
+  width: 300px;
   font-size: 1.8rem;
   font-weight: bold;
   text-align: center;
@@ -16,51 +31,47 @@
   color: #333;
 }
 
-.inputGroup {
-  margin-bottom: 1.2rem;
+.input {
   display: flex;
   flex-direction: column;
-}
-
-.inputGroup label {
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
-  color: #444;
-}
-
-.inputGroup input {
-  padding: 0.6rem 0.8rem;
-  border-radius: 0.5rem;
+  width: 100%;
+  padding: 0.5rem;
   border: 1px solid #ccc;
-  font-size: 0.95rem;
-  transition: border-color 0.3s ease;
+  transition: border-radius 0.3s ease;
 }
 
-.inputGroup input:focus {
-  outline: none;
+.input:focus {
   border-color: #007bff;
+  border-radius: 8px;
 }
 
 .error {
   font-size: 0.85rem;
   color: #e74c3c;
-  margin-top: 0.4rem;
+  margin-top: -20px;
+  text-align: left;
+  width: 100%;
+  padding-left: 5px;
 }
 
 .submitButton {
   width: 100%;
   padding: 0.8rem;
-  background: linear-gradient(135deg, #007bff, #00bcd4);
+  background-color: #007bff;
   border: none;
   border-radius: 0.6rem;
   color: #fff;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease;
-  margin-top: 1rem;
+  transition: background-color 0.3s ease;
 }
 
 .submitButton:hover {
-  background: linear-gradient(135deg, #0056b3, #0097a7);
+  background-color: #0056b3;
+}
+
+.link{
+  color: #0056b3;
+  text-decoration: none;
 }
