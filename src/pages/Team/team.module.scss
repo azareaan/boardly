@@ -31,7 +31,7 @@ select {
   border-radius: 4px;
 }
 
-button {
+.deleteButton {
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -40,7 +40,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.deleteButton:hover {
   background-color: #0056b3;
 }
 
