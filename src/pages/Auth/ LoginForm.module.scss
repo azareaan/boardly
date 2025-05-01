@@ -30,27 +30,27 @@
   color: #333;
 }
 
-.inputGroup {
-  margin-bottom: 1rem;
+.input {
   display: flex;
   flex-direction: column;
-}
-
-.inputGroup label {
-  margin-bottom: 0.5rem;
-  color: #444;
-}
-
-.inputGroup input {
+  width: 100%;
   padding: 0.5rem;
-  border-radius: 8px;
   border: 1px solid #ccc;
+  transition: border-radius 0.3s ease;
+}
+
+.input:focus {
+  border-color: #007bff;
+  border-radius: 8px;
 }
 
 .error {
-  margin-top: 0.25rem;
-  color: #d00;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
+  color: #e74c3c;
+  margin-top: -20px;
+  text-align: left;
+  width: 100%;
+  padding-left: 5px;
 }
 
 .submitButton {
@@ -62,10 +62,14 @@
   border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
 
   &:hover {
     background-color: #0056b3;
   }
 }
 
+.link{
+  color: #0056b3;
+  text-decoration: none;
+}
