@@ -5,6 +5,8 @@ import { UserState, Task, TeamMember, Project, UserData } from "../../types/type
 const store = localStorage.getItem("users");
 const initialState: UserState = store ? JSON.parse(store) : { users: [] };
 
+
+
 export const userSlice = createSlice({
     name: "user",
     initialState,
@@ -15,7 +17,6 @@ export const userSlice = createSlice({
             if (userIndex !== -1) {
                 if (state.users[userIndex].pass === pass) {
                     localStorage.setItem("auth", JSON.stringify({auth: "true", userIndex: userIndex}));
-                    window.location.href = "/";
                 } else {
                     alert("Wrong password");
                     localStorage.setItem("auth", JSON.stringify({auth: "false", userIndex: -1}));
@@ -29,7 +30,6 @@ export const userSlice = createSlice({
         addUser: (state, action: PayloadAction<UserData>) => {
             state.users.push(action.payload);
             localStorage.setItem("users", JSON.stringify(state));
-            window.location.href = "/login";
         },
         
         // add project

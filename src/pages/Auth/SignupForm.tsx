@@ -3,7 +3,7 @@ import styles from "./SignupForm.module.scss";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../redux/slices/userSlice";
 import { UserData } from "../../types/type";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 type SignupInputs = {
   name: string;
@@ -12,6 +12,7 @@ type SignupInputs = {
 };
 
 function SignupForm() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const {
@@ -28,6 +29,7 @@ function SignupForm() {
       role: "admin"
     }
     dispatch(userActions.addUser(userData));
+    navigate("/login");
     console.log("Signup Data:", userData);
   };
 

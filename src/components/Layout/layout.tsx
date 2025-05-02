@@ -1,10 +1,11 @@
-import { Outlet, Link } from "react-router";
+import { Outlet, Link, useNavigate } from "react-router";
 import styles from "./layout.module.scss"
 import { useSelector } from "react-redux";
 import { UserState } from "../../types/type";
 
 
 const Layout = () => {
+    const navigate = useNavigate();
     const auth = JSON.parse(localStorage.getItem("auth") || "{}");
     const userIndex = auth.userIndex;
     const userList: UserState = useSelector((state:any) => state.user);
@@ -14,7 +15,7 @@ const Layout = () => {
 
     const handleExit = () => {
         localStorage.setItem("auth", JSON.stringify({ auth: "false", userIndex: -1 }));
-        window.location.href = "/login";
+        navigate("/login");
     };
 
 

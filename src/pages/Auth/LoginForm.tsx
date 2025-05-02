@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import styles from "./ LoginForm.module.scss";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../redux/slices/userSlice";
 
@@ -10,6 +10,7 @@ type LoginInputs = {
 };
 
 function LoginForm() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const {
@@ -20,6 +21,7 @@ function LoginForm() {
 
   const onSubmit: SubmitHandler<LoginInputs> = (data) => {
     dispatch(userActions.Authentication(data));
+    navigate("/");
     console.log("Login Data:", data);
   };
 
