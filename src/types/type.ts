@@ -7,12 +7,26 @@ export type Task = {
     deadline?: Date;
     responsible: string;
 };
+export interface TaskInput {
+    title: string;
+    description: string;
+    priority: string;
+    status: string;
+    dueDate: string;
+    assignee: string;
+  }
+  
 
-export type TeamMember = {
-    id: number;
+  export interface TeamMember {
+    id: string;
     name: string;
-    role: "admin" | "user";
-};
+    role: string;
+  }
+  
+  export interface TeamMemberInput {
+    name: string;
+    role: string;
+  }
 
 export type Project = {
     id: number;
@@ -20,7 +34,7 @@ export type Project = {
     description: string;
     dateModified: Date;
     tasks?: Task[];
-    team: TeamMember[]; //you must add user to team and then can add team member to project
+    team: TeamMember[]; 
 };
 
 export type UserData = {

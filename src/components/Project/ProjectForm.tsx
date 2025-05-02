@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import styles from "./ProjectForm.module.scss";
 
@@ -20,6 +19,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onSubmit, defaultValues }) =>
     },
   });
 
+  // اطمینان حاصل کنید که handleSubmit و register به درستی استفاده می‌شوند.
   const submitHandler: SubmitHandler<ProjectInput> = (data) => {
     onSubmit(data);
   };

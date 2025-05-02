@@ -1,44 +1,71 @@
 import React, { useState } from "react";
-import TeamMemberForm, { TeamMemberInput } from "../../components/TeamMember/TeamMemberForm";
-import styles from "./Team.module.scss";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/redux";
+import { addMember, editMember, removeMember } from "../../redux/slices/teamSlice";
+import TeamMemberForm from "../../components/TeamMember/TeamMemberForm";
+import { TeamMemberInput } from "../../types/type";
+import styles from "./team.module.scss";
 
-const TeamManagement = () => {
-  const [teamMembers, setTeamMembers] = useState<TeamMemberInput[]>([]);
+const Team: React.FC = () => {
+  const dispatch = useDispatch();
+  const teamMembers = useSelector((state: RootState) => state.team.members);
 
-  const handleAddMember = (data: TeamMemberInput) => {
-    setTeamMembers([...teamMembers, data]);
+  const [editingMember, setEditingMember] = useState<TeamMemberInput | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  const handleAddOrEditMember = (data: TeamMemberInput) => {
+    if (editingMember) {
+      dispatch(editMember(data));  // dispatch از Redux
+    } else {
+      dispatch(addMember(data));
+    }
+    setEditingMember(null);
+    setIsFormOpen(false);
   };
 
-  const handleDeleteMember = (name: string) => {
-    setTeamMembers(teamMembers.filter(member => member.name !== name));
+  const handleEditClick = (member: TeamMemberInput) => {
+    setEditingMember(member);
+    setIsFormOpen(true);
+  };
+
+  const handleDeleteClick = (name: string) => {
+    dispatch(removeMember(name));
   };
 
   return (
-    <div className={styles.teamManagement}>
+    <div className={styles.teamPage}>
       <h1>مدیریت اعضای تیم</h1>
-      <TeamMemberForm onSubmit={handleAddMember} />
 
-      <div className={styles.teamList}>
-        <h2>اعضای تیم</h2>
-        <ul>
-          {teamMembers.map((member, index) => (
-            <li key={index} className={styles.teamMember}>
-              <div>
-                <p>نام: {member.name}</p>
-                <p>نقش: {member.role}</p>
+      <button className={styles.addBtn} onClick={() => { setIsFormOpen(true); setEditingMember(null); }}>
+        افزودن عضو جدید
+      </button>
+
+      {isFormOpen && (
+        <TeamMemberForm
+          onSubmit={handleAddOrEditMember}
+          defaultValues={editingMember || undefined}
+        />
+      )}
+
+      <div className={styles.memberList}>
+        {teamMembers.length > 0 ? (
+          teamMembers.map((member, index) => (
+            <div key={index} className={styles.memberCard}>
+              <p><strong>نام:</strong> {member.name}</p>
+              <p><strong>نقش:</strong> {member.role}</p>
+
+              <div className={styles.actions}>
+                <button onClick={() => handleEditClick(member)}>ویرایش</button>
+                <button onClick={() => handleDeleteClick(member.name)}>حذف</button>
               </div>
-              <button
-                onClick={() => handleDeleteMember(member.name)}
-                className={styles.deleteButton}
-              >
-                حذف
-              </button>
-            </li>
-          ))}
-        </ul>
+            </div>
+          ))
+        ) : (
+          <p>عضوی یافت نشد.</p>
+        )}
       </div>
     </div>
   );
 };
 
-export default TeamManagement;
+export default Team;

@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Project.module.scss";
 import { useForm } from "react-hook-form";
 import ProjectForm, { ProjectInput } from "../../components/Project/ProjectForm";
+import { v4 as uuidv4 } from 'uuid';  
 
 type Project = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   createdAt: string;
@@ -19,7 +20,7 @@ const Projects = () => {
 
   const onSubmit = (data: ProjectInput) => {
     if (editProject) {
-      // Update existing project
+      
       const updatedProjects = projects.map((project) =>
         project.id === editProject.id
           ? { ...project, ...data }
@@ -30,7 +31,7 @@ const Projects = () => {
     } else {
       // Add new project
       const newProject: Project = {
-        id: Date.now(),
+        id: uuidv4(),  
         ...data,
         createdAt: new Date().toLocaleDateString(),
       };
@@ -39,7 +40,7 @@ const Projects = () => {
     reset(); 
   };
 
-  const deleteProject = (id: number) => {
+  const deleteProject = (id: string) => {
     setProjects(projects.filter((p) => p.id !== id));
   };
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import styles from "./TeamMemberForm.module.scss";
+import { TeamMemberInput } from "../../types/type";
 
 type Role = "مدیر" | "عضو عادی";
 
@@ -9,10 +10,7 @@ interface TeamMemberFormProps {
   defaultValues?: TeamMemberInput;
 }
 
-export interface TeamMemberInput {
-  name: string;
-  role: Role;
-}
+
 
 const TeamMemberForm: React.FC<TeamMemberFormProps> = ({ onSubmit, defaultValues }) => {
   const { register, handleSubmit, formState: { errors } } = useForm<TeamMemberInput>({
